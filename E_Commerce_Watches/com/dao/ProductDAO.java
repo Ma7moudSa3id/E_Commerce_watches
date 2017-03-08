@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import ecommerce.Utilities;
 import dto.ProductDTO;
+import java.sql.PreparedStatement;
 
 public class ProductDAO {
 
@@ -53,6 +54,33 @@ public class ProductDAO {
         statement.close();
         resultSet.close();
         return productDTO;
+
+    }
+
+    public static void updateProduct(int productID, ProductDTO productDTO) throws ClassNotFoundException, SQLException {
+
+        String sql = "UPDATE `product` SET `name` = ? ,`price` = ?,`stock`= ? , `category` = ?  WHERE id = ? ";
+        Connection conn = Utilities.openConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setString(1, productDTO.getName());
+        preparedStatement.setInt(2, productDTO.getPrice());
+        preparedStatement.setInt(3, productDTO.getAmount());
+        preparedStatement.setString(4, productDTO.getCategory());
+        preparedStatement.setInt(5, productID);
+        preparedStatement.executeUpdate();
+        conn.close();
+        preparedStatement.close();
+
+    }
+
+    public static void deleteProduct(int productID) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE FROM `product` WHERE id = ?";
+        Connection conn = Utilities.openConnection();
+        PreparedStatement preparedStatement = conn.prepareStatement(sql);
+        preparedStatement.setInt(1, productID);
+        preparedStatement.executeUpdate();
+        conn.close();
+        preparedStatement.close();
 
     }
 
