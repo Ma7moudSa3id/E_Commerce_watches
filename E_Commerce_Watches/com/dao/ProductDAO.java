@@ -1,12 +1,12 @@
-package dao;
+package com.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import ecommerce.Utilities;
-import dto.ProductDTO;
+import com.ecommerce.Utilities;
+import com.dto.ProductDTO;
 import java.sql.PreparedStatement;
 
 public class ProductDAO {

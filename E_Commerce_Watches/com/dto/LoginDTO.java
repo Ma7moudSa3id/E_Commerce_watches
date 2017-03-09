@@ -1,21 +1,18 @@
-package dto;
+package com.dto;
 
 public class LoginDTO {
-	String user;
+	String name;
 	String pass;
 
-	public LoginDTO(String user, String pass) {
-		this.user = user;
-		this.pass = pass;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getUser() {
-		return user;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+
 
 	public String getPass() {
 		return pass;

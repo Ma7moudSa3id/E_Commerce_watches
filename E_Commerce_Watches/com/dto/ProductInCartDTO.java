@@ -1,6 +1,6 @@
 package com.dto;
 
-public class ProductDTO {
+public class ProductInCartDTO {
 
     private String name;
     private String category;
@@ -38,5 +38,6 @@ public class ProductDTO {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+    
 
 }
