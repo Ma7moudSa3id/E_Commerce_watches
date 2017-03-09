@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.ecommerce.Utilities;
+import java.util.ArrayList;
 
 public class CustomerDAO {
 
@@ -74,14 +75,37 @@ public class CustomerDAO {
         creditLimit = resultSet.getInt("cst_creditlimit");
         return creditLimit;
     }
-    public static  void editUserCredit(int newCredit , String userName) throws SQLException, ClassNotFoundException{
+
+    public static void editUserCredit(int newCredit, String userName) throws SQLException, ClassNotFoundException {
         int userID = CustomerDAO.getUserID(userName);
         Connection connection = Utilities.openConnection();
         Statement statement = Utilities.createStatement(connection);
-        String sql = "update customer set cst_creditlimit = "+newCredit+" where (idCustomer ="+ userID+")";
+        String sql = "update customer set cst_creditlimit = " + newCredit + " where (idCustomer =" + userID + ")";
         statement.executeUpdate(sql);
         connection.close();
         statement.close();
     }
 
+    public static ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
+        ArrayList<CustomerDTO> list = new ArrayList<>();
+        String sql = "select * from customer ";
+        Connection connection = Utilities.openConnection();
+        Statement statement = Utilities.createStatement(connection);
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.setName(resultSet.getString("cst_name"));
+            customerDTO.setPass(resultSet.getString("cst_pass"));
+            customerDTO.setAddress(resultSet.getString("cst_address"));
+            customerDTO.setMail(resultSet.getString("cst_mail"));
+            customerDTO.setPhone(resultSet.getString("cst_phone"));
+            customerDTO.setJob(resultSet.getString("cst_job"));
+            customerDTO.setCreditlimit(resultSet.getInt("cst_creditlimit"));
+            list.add(customerDTO);
+        }
+        connection.close();
+        statement.close();
+        resultSet.close();
+        return list;
+    }
 }

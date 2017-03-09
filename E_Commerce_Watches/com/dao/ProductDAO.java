@@ -8,6 +8,7 @@ import java.sql.Statement;
 import com.ecommerce.Utilities;
 import com.dto.ProductDTO;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 public class ProductDAO {
 
@@ -82,6 +83,23 @@ public class ProductDAO {
         conn.close();
         preparedStatement.close();
 
+    }
+
+    public static ArrayList<ProductDTO> getAllProducts() throws SQLException, ClassNotFoundException {
+        ArrayList<ProductDTO> list = new ArrayList<>();
+        String sql = "select * from product";
+        Connection connection = Utilities.openConnection();
+        Statement statement = Utilities.createStatement(connection);
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setName(resultSet.getString("prod_name"));
+            productDTO.setCategory(resultSet.getString("prod_category"));
+            productDTO.setPrice(resultSet.getInt("prod_price"));
+            productDTO.setAmount(resultSet.getInt("prod_amount"));
+            list.add(productDTO);
+        }
+        return list;
     }
 
 }
